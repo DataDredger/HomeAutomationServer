@@ -47,23 +47,29 @@ hosts allow =
 ```
 4. type sudo smbpasswd -a pi
 5. type a new password went prompted
-6. restart the samba service by typing sudo service smbd restart
+6. restart the samba service by typing `$ sudo service smbd restart`
 
 
 
 ## Start HASS
 
 ``` bash
+$ sudo su -s /bin/bash hass
 $ source /srv/homeassistant/homeassistant_venv/bin/activate
-$ HASS
+$ hass
 ```
+
+sudo -u hass -H /srv/homeassistant/homeassistant_venv/bin/activate
 
 ## useful information
 if you need to stop and start the server from the command line
 
 ```
-$ sudo systemctl stop home-assistant@pi
-$ sudo systemctl start home-assistant@pi
+$ sudo service hass-daemon restart
 ```
-if there are proplems with the YAML configuration run
+if there are problems with the YAML configuration run
 `$ hass --script check_config` to check the configuration
+
+Sometimes the yaml config file will get set to the incorrect location when this
+happnes you should run the command `$ hass --config /home/homeassistant/.homeassistant` to reset the
+location
