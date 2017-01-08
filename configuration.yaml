@@ -1,0 +1,220 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # base_url: 10.0.0.62:8123
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret HomeLatitude
+  longitude: !secret HomeLongitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 23
+  # metric for Metric, imperial for Imperial
+  unit_system: imperial
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Los_Angeles
+  # Time for some friendly names
+  customize:
+    media_player.hal:
+      friendly_name: HAL
+    device_tracker.amazingwifesphone:
+      friendly_name: Aim
+    device_tracker.briansmacbookpro:
+      icon: mdi:laptop-mac
+
+
+# Show links to resources in log and frontend
+# introduction:
+
+# Enables the frontend
+frontend:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  # api_password: PASSWORD
+  # Uncomment this if you are using SSL or running in Docker etc
+  # base_url: example.duckdns.org:8123
+
+# Checks for available updates
+updater:
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+# media players
+media_player Yamaha:
+  - platform: yamaha
+    host: !secret YamahaRecieverIP
+    source_ignore:
+      - "AUX"
+      - "HDMI5"
+      - "AV1"
+      - "AV2"
+      - "AV3"
+      - "AV4"
+      - "AV5"
+      - "AV6"
+      - "AUDIO1"
+      - "AUDIO2"
+      - "AirPlay"
+      - "NET RADIO"
+      - "Pandora"
+      - "Rhapsody"
+      - "SERVER"
+      - "SiriusXM"
+      - "TUNER"
+      - "USB"
+      - "V-AUX"
+      - "iPod (USB)"
+    source_names:
+      HDMI1: "X-Box"
+      HDMI2: "ChromeCast"
+      HDMI3: "Cable"
+      HDMI4: "RaspberryPi"
+
+media_player hal:
+  - platform: cast
+    host: !secret ChromecastHalIP
+
+media_player skynet:
+  - platform: cast
+    host: !secret ChromecastSkynetIP
+
+media_player wopr:
+  - platform: cast
+    host: !secret ChromecastWoprIP
+
+# Weather Prediction
+sensor:
+  - platform: darksky
+    api_key: !secret DarkSkyAPI
+    monitored_conditions:
+      - summary
+      - icon
+      - nearest_storm_distance
+      - nearest_storm_bearing
+      - precip_type
+      - precip_intensity
+      - precip_probability
+      - temperature
+      - apparent_temperature
+      - dew_point
+      - wind_speed
+      - wind_bearing
+      - cloud_cover
+      - humidity
+      - pressure
+      - visibility
+      - ozone
+      - minutely_summary
+      - hourly_summary
+      - daily_summary
+      - temperature_max
+      - temperature_min
+      - apparent_temperature_max
+      - apparent_temperature_min
+      - precip_intensity_max
+
+camera:
+  name: Orathai
+  platform: generic
+  still_image_url: https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.amazingwifesphone.attributes.latitude }},{{ states.device_tracker.amazingwifesphone.attributes.longitude }}&zoom=16&size=500x500&maptype=hybrid&markers=color:blue%7Clabel:P%7C{{ states.device_tracker.amazingwifesphone.attributes.latitude }},{{ states.device_tracker.amazingwifesphone.attributes.longitude }}
+  limit_refetch_to_url_change: true
+
+
+# Text to speech
+tts:
+  platform: google
+
+mqtt:
+  broker: 127.0.0.1
+  port: 1883
+  client_id: home-assistant-1
+  username: pi
+  password: raspberry
+
+#this section controls the location settings
+
+device_tracker:
+  - platform: icloud
+    username: !secret iCloudAccount
+    password: !secret iCloudPassword
+
+zone:
+  name: Home
+  latitude: !secret HomeLatitude
+  longitude: !secret HomeLongitude
+  radius: 100
+  icon: mdi:account-multiple
+
+zone 1:
+  name: Work
+  latitude: !secret WorkLatitude
+  longitude: !secret WorkLongitude
+  radius: 100
+  icon: mdi:domain
+
+zone 2:
+  name: Panyatiam Manor
+  latitude: !secret PanyatiamLatitude
+  longitude: !secret PanyatiamLongitude
+  radius: 100
+  icon: mdi:account-multiple
+
+# UI Groupings
+group:
+  default_view:
+    view: yes
+    entities:
+      - group.outside
+      - media_player.yamaha_receiver
+      - media_player.skynet
+      - media_player.wopr
+      - group.people
+      # - camera.orathai
+  EvilLair:
+    name: Media
+    view: yes
+    entities:
+      - group.MediaController
+      - group.ChromeCast
+  UpStairs:
+    name: Up Stairs
+    view: yes
+    entities:
+      - media_player.kitchen
+      - media_player.living_room
+  #Sub Groupings
+  people:
+    name: People
+    entities:
+      - device_tracker.strongbadia
+      - device_tracker.amazingwifesphone
+      - device_tracker.briansmacbookpro
+  outside:
+    name: Outside
+    entities:
+     - sensor.dark_sky_summary
+     - sun.sun
+     - sensor.dark_sky_temperature
+     - sensor.dark_sky_wind_speed
+  MediaController:
+    name: Media
+    entities:
+      - media_player.yamaha_receiver
+  ChromeCast:
+    name: ChromeCast
+    entities:
+      - media_player.skynet
+      - media_player.wopr
+      - media_player.hal
