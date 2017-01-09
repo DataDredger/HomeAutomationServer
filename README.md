@@ -1,14 +1,14 @@
 ## Setup the Pi
 
-1. ran `$ passwd` to change the default password
-2. ran `$ sudo apt-get update`
+1. run `$ passwd` to change the default password
+2. run `$ sudo apt-get update`
 3. run `sudo apt-get upgrade`
-4.  ran `$sudo raspi-config` to launc the configuration editor
-  1. exapnded the file system
-  2. in advnced I enabled SSH
+4. run `$sudo raspi-config` to launc the configuration editor
+  1. exapnd the file system
+  2. in interfacing enable SSH
 5. REBOOT
 
-ran the all in one installer: https://home-assistant.io/getting-started/installation-raspberry-pi-all-in-one/
+run the all in one installer: https://home-assistant.io/getting-started/installation-raspberry-pi-all-in-one/
 
 ```bash
 $ wget -Nnv https://raw.githubusercontent.com/home-assistant/fabric-home-assistant/master/hass_rpi_installer.sh && chown pi:pi hass_rpi_installer.sh && bash hass_rpi_installer.sh
@@ -21,6 +21,8 @@ Because raspbian doesn't let you use SFTP with an account that has root access y
 2. execute the command to add a password to the user that you just created `$ sudo passwd brian`
 
 3. Execute the command `$ sudo usermod -a -G homeassistant brian` to add the user that was just created to the homeassistant group.
+
+4. modify the permissions of the /home/homeassistant/.homeassistant folder to allow the group to write to it. `$ sudo chmod g=rwx  /home/homeassistant/.homeassistant`
 
 
 
@@ -62,14 +64,16 @@ hosts allow =
 
 
 ## Start HASS
+To start HASS you will need to complete two operations before it can be started.
+
+1. switch the user to the homeassistant user
+2. activate the virtual environment
 
 ``` bash
 $ sudo su -s /bin/bash hass
 $ source /srv/homeassistant/homeassistant_venv/bin/activate
 $ hass
 ```
-
-sudo -u hass -H /srv/homeassistant/homeassistant_venv/bin/activate
 
 ## useful information
 if you need to stop and start the server from the command line
