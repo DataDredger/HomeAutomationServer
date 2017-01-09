@@ -1,4 +1,6 @@
 
 secrets.yaml
-
 known_devices.yaml
+.ftpconfig
+ftpignore
+home-assistant.log

@@ -13,6 +13,16 @@ ran the all in one installer: https://home-assistant.io/getting-started/installa
 ```bash
 $ wget -Nnv https://raw.githubusercontent.com/home-assistant/fabric-home-assistant/master/hass_rpi_installer.sh && chown pi:pi hass_rpi_installer.sh && bash hass_rpi_installer.sh
 ```
+## creating user and group
+Because raspbian doesn't let you use SFTP with an account that has root access you will want to create an account that cant connect to your pi via SFTP do administer the files.
+
+1. Added a new user `$ sudo useradd -M brian` the -M flag is used to create a user without a home directory. I am doing this since this user will just be used to administer the server.
+
+2. execute the command to add a password to the user that you just created `$ sudo passwd brian`
+
+3. Execute the command `$ sudo usermod -a -G homeassistant brian` to add the user that was just created to the homeassistant group.
+
+
 
 ## Setup Samba
 
