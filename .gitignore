@@ -4,3 +4,5 @@ known_devices.yaml
 .ftpconfig
 ftpignore
 home-assistant.log
+
+mopidy.conf

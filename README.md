@@ -1,4 +1,4 @@
-## Setup the Pi
+# Setup the Pi
 
 1. run `$ passwd` to change the default password
 2. run `$ sudo apt-get update`
@@ -7,6 +7,111 @@
   1. exapnd the file system
   2. in interfacing enable SSH
 5. REBOOT
+
+instll setup tools `sudo apt-get install python-setuptools`
+
+install pip`sudo easy_install pip`
+
+# Setup MOPIDY
+https://www.mopidy.com/
+
+1. add the archives GPG key
+`wget -q -O - https://apt.mopidy.com/mopidy.gpg | sudo apt-key add -`
+
+2. Add the APT repo to your package sources:
+`sudo wget -q -O /etc/apt/sources.list.d/mopidy.list https://apt.mopidy.com/jessie.list`
+
+3. Install Mopidy and all dependencies:
+```
+sudo apt-get update
+sudo apt-get install mopidy
+```
+
+## install the google play music extension
+https://github.com/mopidy/mopidy-gmusic
+
+`sudo pip install mopidy-gmusic`
+
+you may need to update the pyasn1 package
+`sudo pip install --upgrade pyasn1`
+
+
+## Edit the Configuration
+
+configuration file will be located in `/etc/mopidy/mopidy.conf`
+
+Base config file will look like this:
+```
+[core]
+cache_dir = /var/cache/mopidy
+config_dir = /etc/mopidy
+data_dir = /var/lib/mopidy
+
+[logging]
+config_file = /etc/mopidy/logging.conf
+debug_file = /var/log/mopidy/mopidy-debug.log
+
+[http]
+enabled = true
+hostname = ::
+port = 6680
+zeroconf =
+
+[local]
+media_dir = /var/lib/mopidy/media
+
+[m3u]
+playlists_dir = /var/lib/mopidy/playlists
+```
+You will need to add section for google play music
+```
+[gmusic]
+username = alice@gmail.com
+password = secret
+deviceid = ################
+
+#These match the defaults used by the extension
+radio_stations_in_browse = true
+radio_stations_as_playlists = false
+# Leaving this unset make it unlimited
+radio_stations_count =
+# Limit the number or tracks for each radio station
+radio_tracks_count = 25
+```
+
+## test the installation
+
+``` bash
+$ sudo service mopidy start
+$ sudo service mopidy stop
+```
+
+## add the service to systemd
+
+to  add the mopidy service to systemd you will need to execute the following command: `sudo systemctl status mopidy`
+
+once the service has been added it will automatically start running when the pi is turned on. to manage the service you can use the commands below:
+```bash
+$ sudo systemctl start mopidy
+$ sudo systemctl stop mopidy
+$ sudo systemctl restart mopidy
+$ sudo systemctl status mopidy
+```
+
+## installed front end
+https://github.com/martijnboland/moped
+`sudo pip install Mopidy-Moped`
+`sudo pip install Mopidy-Mopify`
+
+test by going to http://localhost:6680/moped
+http://localhost:6680/Mopify
+
+## Useful commands
+
+* Insect the services configuration: `sudo mopidyctl config`
+* scan the music library: `sudo mopidyctl local scan`
+
+# Setup Home Assistant
 
 run the all in one installer: https://home-assistant.io/getting-started/installation-raspberry-pi-all-in-one/
 
@@ -87,3 +192,5 @@ if there are problems with the YAML configuration run
 Sometimes the yaml config file will get set to the incorrect location when this
 happnes you should run the command `$ hass --config /home/homeassistant/.homeassistant` to reset the
 location
+
+#installing music server

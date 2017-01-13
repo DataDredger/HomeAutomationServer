@@ -94,6 +94,10 @@ media_player wopr:
   - platform: cast
     host: !secret ChromecastWoprIP
 
+media_player GooglePlay:
+  - platform: gpmdp
+    host: 10.0.0.168
+
 # Weather Prediction
 sensor:
   - platform: darksky
@@ -188,6 +192,7 @@ group:
     entities:
       - group.MediaController
       - group.ChromeCast
+      - media_player.gpm_desktop_player
   UpStairs:
     name: Up Stairs
     view: yes
