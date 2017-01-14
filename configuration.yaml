@@ -98,6 +98,11 @@ media_player GooglePlay:
   - platform: gpmdp
     host: 10.0.0.168
 
+# media_player MOPDI:
+  # platform: mpd
+  # host: 10.0.0.62
+  # port: 6680
+
 # Weather Prediction
 sensor:
   - platform: darksky
@@ -174,6 +179,13 @@ zone 2:
   longitude: !secret PanyatiamLongitude
   radius: 100
   icon: mdi:account-multiple
+
+
+panel_iframe:
+  music:
+    title: 'Music'
+    icon: 'mdi:music-box-outline'
+    url: 'http://10.0.0.62:6680/mobile/index.html#/playback'
 
 # UI Groupings
 group:

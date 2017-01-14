@@ -72,11 +72,11 @@ deviceid = ################
 
 #These match the defaults used by the extension
 radio_stations_in_browse = true
-radio_stations_as_playlists = false
+radio_stations_as_playlists = true
 # Leaving this unset make it unlimited
 radio_stations_count =
 # Limit the number or tracks for each radio station
-radio_tracks_count = 25
+radio_tracks_count = 50
 ```
 
 ## test the installation
@@ -98,10 +98,37 @@ $ sudo systemctl restart mopidy
 $ sudo systemctl status mopidy
 ```
 
+## Internet archives
+
+execute the following command to install the backend extension: `sudo pip2 install Mopidy-Internetarchive`
+
+Basic Configuration File
+```
+[internetarchive]
+enabled = true
+
+collections =
+    audio
+    oldtimeradio
+    etree
+    librivoxaudio
+    audio_bookspoetry
+    audio_tech
+    audio_music
+    audio_news
+    audio_foreign
+    audio_podcast
+    audio_religion
+```
+
 ## installed front end
 https://github.com/martijnboland/moped
-`sudo pip install Mopidy-Moped`
-`sudo pip install Mopidy-Mopify`
+https://github.com/tkem/mopidy-mobile
+
+`sudo pip2 install Mopidy-Moped`
+`sudo pip2 install Mopidy-Mopify`
+`sudo pip2 install Mopidy-Mobile`
+
 
 test by going to http://localhost:6680/moped
 http://localhost:6680/Mopify
@@ -175,10 +202,39 @@ To start HASS you will need to complete two operations before it can be started.
 2. activate the virtual environment
 
 ``` bash
-$ sudo su -s /bin/bash hass
+$ sudo su -s /bin/bash homeassistant
 $ source /srv/homeassistant/homeassistant_venv/bin/activate
 $ hass
 ```
+
+## Auto start
+1. Create the service file
+```bash
+$ sudo nano /lib/systemd/system/home-assistant@pi.service
+```
+2. add the following text to the file
+
+```
+[Unit]
+Description=Home Assistant
+After=network.target
+
+[Service]
+Type=simple
+User=homeassistant
+ExecStartPre=source /srv/homeassistant/homeassistant_venv/bin
+ExecStart=/srv/homeassistant/homeassistant_venv/bin/hass -c "/home/homeassistant/.homeassistant"
+
+[Install]
+WantedBy=multi-user.target
+```
+3. Run the following commands:
+```
+sudo systemctl --system daemon-reload
+sudo systemctl enable home-assistant@pi
+sudo systemctl start home-assistant@pi
+```
+4. REBOOT
 
 ## useful information
 if you need to stop and start the server from the command line
