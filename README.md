@@ -8,8 +8,9 @@
   2. in interfacing enable SSH
 5. REBOOT
 
-instll setup tools `sudo apt-get install python-setuptools`
+adjust the volume on the pi:'sudo alsamixer'
 
+install setup tools `sudo apt-get install python-setuptools`
 install pip`sudo easy_install pip`
 
 # Setup MOPIDY

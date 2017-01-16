@@ -98,10 +98,9 @@ media_player GooglePlay:
   - platform: gpmdp
     host: 10.0.0.168
 
-# media_player MOPDI:
-  # platform: mpd
-  # host: 10.0.0.62
-  # port: 6680
+media_player mopidy:
+  - platform: mpd
+    host: 127.0.0.1
 
 # Weather Prediction
 sensor:
@@ -197,14 +196,15 @@ group:
       - media_player.skynet
       - media_player.wopr
       - group.people
+      - group.LR_Lights
       # - camera.orathai
-  EvilLair:
+  Media:
     name: Media
     view: yes
     entities:
       - group.MediaController
       - group.ChromeCast
-      - media_player.gpm_desktop_player
+      - media_player.mpd
   UpStairs:
     name: Up Stairs
     view: yes
@@ -235,3 +235,9 @@ group:
       - media_player.skynet
       - media_player.wopr
       - media_player.hal
+  lr_lights:
+    name: Living Room Light
+    entities:
+      - light.living_center_rear
+      - light.living_right_rear
+      - light.livinig_left_rear
