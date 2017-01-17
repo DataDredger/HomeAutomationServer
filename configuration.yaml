@@ -51,6 +51,12 @@ logbook:
 # Track the sun
 sun:
 
+# Hues Lighs Setup IP:10.0.0.188
+# to discover your IP: https://www.meethue.com/api/nupnp
+light:
+  platform: hue
+  host: 10.0.0.188
+
 # media players
 media_player Yamaha:
   - platform: yamaha
@@ -195,8 +201,11 @@ group:
       - media_player.yamaha_receiver
       - media_player.skynet
       - media_player.wopr
+      - scene.movies
       - group.people
-      - group.LR_Lights
+      - group.lr_lights
+      - group.dr_lights
+      - group.br_lights
       # - camera.orathai
   Media:
     name: Media
@@ -236,8 +245,39 @@ group:
       - media_player.wopr
       - media_player.hal
   lr_lights:
-    name: Living Room Light
+    name: Living Room Lights
     entities:
       - light.living_center_rear
       - light.living_right_rear
-      - light.livinig_left_rear
+      - light.living_left_rear
+  dr_lights:
+    name: Dining Room Lights
+    entities:
+      - light.dining_front
+  kt_lights:
+    name: Kitchen Lights
+  br_lights:
+    name: Bedroom Lights
+    entities:
+      - light.bedroom_brian
+
+scene:
+  - name: Movies
+    entities:
+      light.living_center_rear:
+        state: on
+        brightness: 25
+        color_temp: 153
+        #rgb_color: [87,41,4]
+      light.living_right_rear:
+        state: on
+        brightness: 25
+        color_temp: 153
+        #rgb_color: [87,41,4]
+      #light.living_left_rear:
+        #state: on
+        #brightness: 25
+        #color_temp: 153
+        #rgb_color: [87,41,4]
+      media_player.yamaha_receiver:
+        source: ChromeCast
