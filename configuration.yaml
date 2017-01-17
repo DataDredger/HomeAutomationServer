@@ -202,6 +202,7 @@ group:
       - media_player.skynet
       - media_player.wopr
       - scene.movies
+      - scene.Aim
       - group.people
       - group.lr_lights
       - group.dr_lights
@@ -266,18 +267,39 @@ scene:
     entities:
       light.living_center_rear:
         state: on
-        brightness: 25
-        color_temp: 153
+        brightness: 1
+        color_name: red
         #rgb_color: [87,41,4]
       light.living_right_rear:
         state: on
         brightness: 25
-        color_temp: 153
+        color_name: red
         #rgb_color: [87,41,4]
-      #light.living_left_rear:
-        #state: on
-        #brightness: 25
-        #color_temp: 153
+      light.living_left_rear:
+        state: on
+        brightness: 1
+        color_name: red
         #rgb_color: [87,41,4]
       media_player.yamaha_receiver:
-        source: ChromeCast
+        - source: ChromeCast
+        - is_volume_muted: false
+
+  - name: Aim
+    entities:
+      light.living_center_rear:
+        state: on
+        brightness: 250
+        color_name: white
+        #rgb_color: [87,41,4]
+      light.living_right_rear:
+        state: on
+        brightness: 250
+        color_name: white
+        #rgb_color: [87,41,4]
+      light.living_left_rear:
+        state: on
+        brightness: 250
+        color_name: white
+        #rgb_color: [87,41,4]
+      media_player.yamaha_receiver:
+        is_volume_muted: true
