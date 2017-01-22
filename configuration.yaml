@@ -207,6 +207,7 @@ group:
       - group.lr_lights
       - group.dr_lights
       - group.br_lights
+      - automation.leavehome
       # - camera.orathai
   Media:
     name: Media
@@ -267,19 +268,19 @@ scene:
     entities:
       light.living_center_rear:
         state: on
+        rgb_color: [29,4,0]
+        color_temp: 153
         brightness: 1
-        color_name: red
-        #rgb_color: [87,41,4]
       light.living_right_rear:
         state: on
-        brightness: 25
-        color_name: red
-        #rgb_color: [87,41,4]
+        rgb_color: [29,4,0]
+        color_temp: 153
+        brightness: 1
       light.living_left_rear:
         state: on
+        rgb_color: [29,4,0]
+        color_temp: 153
         brightness: 1
-        color_name: red
-        #rgb_color: [87,41,4]
       media_player.yamaha_receiver:
         - source: ChromeCast
         - is_volume_muted: false
@@ -288,18 +289,48 @@ scene:
     entities:
       light.living_center_rear:
         state: on
-        brightness: 250
-        color_name: white
-        #rgb_color: [87,41,4]
+        rgb_color: [253,254,255]
+        color_temp: 154
+        brightness: 254
       light.living_right_rear:
         state: on
-        brightness: 250
-        color_name: white
-        #rgb_color: [87,41,4]
+        rgb_color: [253,254,255]
+        color_temp: 154
+        brightness: 254
       light.living_left_rear:
         state: on
-        brightness: 250
-        color_name: white
-        #rgb_color: [87,41,4]
+        rgb_color: [253,254,255]
+        color_temp: 154
+        brightness: 254
       media_player.yamaha_receiver:
         is_volume_muted: true
+
+automation LeaveHome:
+  alias: LeaveHome
+  initial_state: false
+  trigger:
+    platform: zone
+    entity_id: device_tracker.strongbadia
+    zone: zone.home
+    event: leave
+  action:
+    service: light.turn_off
+    entity_id:
+      - group.lr_lights
+      - group.dr_lights
+      - group.br_lights
+
+  automation ArriveHome:
+    alias: LeaveHome
+    initial_state: false
+    trigger:
+      platform: zone
+      entity_id: device_tracker.strongbadia
+      zone: zone.home
+      event: Enter
+    action:
+      service: light.turn_on
+      entity_id:
+        - group.lr_lights
+        - group.dr_lights
+        - group.br_lights
