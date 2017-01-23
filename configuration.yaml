@@ -273,24 +273,20 @@ scene:
       group.lr_lights:
         state: on
         profile: movies
+      light.dining_front:
+        state: on
+        color_temp: 400
+        brightness: 10
 
   - name: Aim
     entities:
-      light.living_center_rear:
+      group.lr_lights:
         state: on
-        rgb_color: [253,254,255]
-        color_temp: 154
-        brightness: 254
-      light.living_right_rear:
+        profile: energize
+      light.dining_front:
         state: on
-        rgb_color: [253,254,255]
-        color_temp: 154
-        brightness: 254
-      light.living_left_rear:
-        state: on
-        rgb_color: [253,254,255]
-        color_temp: 154
-        brightness: 254
+        color_temp: 230
+        brightness: 203
       media_player.yamaha_receiver:
         is_volume_muted: true
 
