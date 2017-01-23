@@ -17,6 +17,8 @@ homeassistant:
       friendly_name: HAL
     device_tracker.amazingwifesphone:
       friendly_name: Aim
+    device_tracker.strongbadia:
+      friendly_name: Brian
     device_tracker.briansmacbookpro:
       icon: mdi:laptop-mac
 
@@ -220,7 +222,7 @@ group:
       - media_player.mpd
   UpStairs:
     name: Up Stairs
-    view: yes
+    view: no
     entities:
       - media_player.kitchen
       - media_player.living_room
@@ -268,24 +270,9 @@ group:
 scene:
   - name: Movies
     entities:
-      light.living_center_rear:
+      group.lr_lights:
         state: on
-        rgb_color: [29,4,0]
-        color_temp: 153
-        brightness: 1
-      light.living_right_rear:
-        state: on
-        rgb_color: [29,4,0]
-        color_temp: 153
-        brightness: 1
-      light.living_left_rear:
-        state: on
-        rgb_color: [29,4,0]
-        color_temp: 153
-        brightness: 1
-      media_player.yamaha_receiver:
-        - source: ChromeCast
-        - is_volume_muted: false
+        profile: movies
 
   - name: Aim
     entities:
