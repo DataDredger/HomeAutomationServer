@@ -51,8 +51,9 @@ logbook:
 # Track the sun
 sun:
 
-# Hues Lighs Setup IP:10.0.0.188
 # to discover your IP: https://www.meethue.com/api/nupnp
+# color lights: use the profile.csv to control the colors
+# White Ambiance: use color_temp and brightness attributes not profile.csv
 light:
   platform: hue
   host: 10.0.0.188
@@ -208,6 +209,7 @@ group:
       - group.dr_lights
       - group.br_lights
       - automation.leavehome
+      - automation.arrivehome
       # - camera.orathai
   Media:
     name: Media
@@ -307,7 +309,7 @@ scene:
 
 automation LeaveHome:
   alias: LeaveHome
-  initial_state: false
+  initial_state: true
   trigger:
     platform: zone
     entity_id: device_tracker.strongbadia
@@ -320,17 +322,17 @@ automation LeaveHome:
       - group.dr_lights
       - group.br_lights
 
-  automation ArriveHome:
-    alias: LeaveHome
-    initial_state: false
-    trigger:
-      platform: zone
-      entity_id: device_tracker.strongbadia
-      zone: zone.home
-      event: Enter
-    action:
-      service: light.turn_on
-      entity_id:
-        - group.lr_lights
-        - group.dr_lights
-        - group.br_lights
+automation ArriveHome:
+  alias: ArriveHome
+  initial_state: true
+  trigger:
+    platform: zone
+    entity_id: device_tracker.strongbadia
+    zone: zone.home
+    event: enter
+  action:
+    service: light.turn_on
+    entity_id:
+      - group.lr_lights
+      - group.dr_lights
+      - group.br_lights
